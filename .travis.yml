@@ -1,0 +1,12 @@
+# We need docker and that's why we need superuser permissions
+sudo: required
+services: 
+    - docker
+    
+# Before running tests we need to build our image
+before_install:
+    - docker build -t eulenspiegel/docker-react:latest -f Dockerfile.dev .
+    
+# Now run our tests
+script:
+    - docker run -e CI=true eulenspiegel/docker-react npm run test
